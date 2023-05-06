@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link href="stylesheets/bootstrap.min.css" rel="stylesheet">
+  <link href="stylesheets/chat.css" rel="stylesheet">
+
+  <title>Chat Bot with Lex</title>
+
+  <script type="text/javascript" src="javascripts/jquery-3.6.0.min.js"></script>
+
+
+
+
+  <script>
+let user = getCookie("user");
+let password = getCookie("password");
+
+if (user == null || password == null){
+  window.location.href = "/";
+}
+  
+$(document).ready(function () {
+  $.post("/bot", credentials, function(response) {
+          console.log(response);
+  });
+  
+  //Capturamos el ENTER en el cuadro de entrada para enviar el texto al Backend
+  $("#intexto").keyup(function (e) {
+    if (e.keyCode == 13) {
+      //Desahibilitamos el campo para evitar una DOBLE ENTRADA.
+      $("#intexto").prop("disabled", true)
+      var str = $("#intexto").val();
+      //Agregamos lo que el usuario escribio al CHAT
+      addUserText(str);
+      //Mandamos procesar la entrada del usuario via POST a /lex en le backend
+      $.post("/lex", { text: str }, function (data) {
+        $("#intexto").val("");
+        $("#intexto").prop("disabled", false)
+        //Agregamos lo que el BOT nos contesto al CHAT.
+        addBotText(data.resp);
+        $("#intexto").focus();
+      });
+    }
+  });
+
+  // Add event listener to "Enviar" button
+  $("#enviar-btn").click(function () {
+    // Call the same function triggered by the "Enter" key event
+      $("#intexto").trigger($.Event("keyup", { keyCode: 13 }));
+    });
+  });
+    //user=pepe
+    //expires=Thu, 18 Feb 2021 15:46:00 UTC
+    //path=/
+    function getCookie(name) {
+      let cookieName = name + "=";
+      let cookieArray = document.cookie.split(";");
+      for (let i = 0; i < cookieArray.length; i++) {
+        let cookie = cookieArray[i];
+        while (cookie.charAt(0) == " ") {
+          cookie = cookie.substring(1, cookie.length);
+        }
+        if (cookie.indexOf(cookieName) == 0) {
+          return cookie.substring(cookieName.length, cookie.length);
+        }
+      }
+      return null;
+    }
+
+    function addUserText(text) {
+      let html = `        
+                          <div class="row">
+                            <div class="col-10">
+                              <div class="bg-white rounded p-2 mb-2">
+                                <p class="mb-0">${text}</p>
+                              </div>
+                            </div>
+                            <div class="col-2">
+                              <img src="https://img.icons8.com/color/48/000000/circled-user-male-skin-type-7.png" class="rounded-circle img-fluid" style="float: right;" alt="Bot Avatar">
+                            </div>
+                          </div>`
+      $("#chat").append(html);
+    }
+
+    function addBotText(text) {
+      let html = `
+                          <div class="row">
+                              <div class="col-2">
+                                <img src="https://img.icons8.com/color/48/000000/circled-user-female-skin-type-7.png" class="rounded-circle img-fluid" alt="Bot Avatar">
+                              </div>
+                              <div class="col-10">
+                                <div class="bg-light rounded p-2 mb-2">
+                                  <p class="mb-0">${text}</p>
+                                </div>
+                              </div>
+                          </div>
+      `
+      $("#chat").append(html);
+    }    
+  </script>
+
+</head>
+
+<body>
+  <div class="container my-3">
+    <div class="card">
+      <div class="card-header d-flex flex-row justify-content-between align-items-center bg-primary text-white">
+        <h4 class="mb-0">Chat Bot </h4>
+        <button type="button" class="btn-close text-white" aria-label="Close"></button>
+      </div>
+      <div id="chat" class="card-body">
+        <div class="row">
+          <div class="col-2">
+            <img src="https://img.icons8.com/color/48/000000/circled-user-female-skin-type-7.png" class="rounded-circle img-fluid" alt="Bot Avatar">
+          </div>
+          <div class="col-10">
+            <div class="bg-light rounded p-2 mb-2">
+              <p class="mb-0">¡Bienvenido a nuestro Chat Bot!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer"> 
+        <div class="input-group">
+          <input id="intexto" type="text" class="form-control" placeholder="Escribe tu mensaje aquí...">
+          <button class="btn btn-primary" type="button" id="enviar-btn">Enviar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="javascripts/bootstrap.bundle.min.js"></script>
+</body

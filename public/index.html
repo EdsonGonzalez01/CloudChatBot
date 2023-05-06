@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="stylesheets/bootstrap.min.css" rel="stylesheet">
+  <link href="stylesheets/chat.css" rel="stylesheet">
+
+  <title>Login</title>
+
+  <script type="text/javascript" src="javascripts/jquery-3.6.0.min.js"></script>
+   
+  <script>
+  
+  $(document).ready(function () {
+
+    $("#boton").on("click", function(){
+      let email = document.getElementById('email').value;
+  
+      let password = document.getElementById('password').value;
+
+      let info = {
+        "email" : email,
+        "password" : password
+      };
+      $.post("/sns", info, function (data) {
+        console.log(data);
+        addBotText(data, credentials);
+      });
+   }); 
+  })
+
+  function addBotText(text, credentials){
+    let promp = "";
+    let flag = 0;
+    if (text.error){
+      alert(text.error)
+    }else{
+      text = text.resp;
+      while (flag == 0){
+        let promp = prompt('Escribe el codigo que te llego');
+        if (promp == null){
+          break;
+        }
+        if (promp == text){
+        alert("el codigo fue correcto, redireccionando")
+        flag = 1;
+        }else{
+          alert("Codigo incorrecto, intente de nuevo")
+        };
+      };
+      if (flag != 0){
+        // Call the setCookie function with the user and password values
+        setCookie("user", credentials.email, 7);
+        setCookie("password", credentials.password, 7);
+        window.location.href = "/bot.html";
+      }
+    };
+
+    function setCookie(name, value, days) {
+      let expires = "";
+      if (days) {
+        let date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+      }
+      document.cookie = name + "=" + value + expires + "; path=/";
+                      //user=pepe;expires=Thu, 18 Feb 2021 15:46:00 UTC; path=/
+    }
+  }
+
+  
+  </script>
+
+</head>
+
+<body>
+
+  
+    
+  <section class="marco">
+  <h1>Login</h1>
+  <div class="col-md-4">
+        <label for="email" id="texto_correo">Correo </label>
+        <input type="email"  class="required "  id="cajas" name="email" >
+  </div>
+  <div class="col-md-4">
+    <label for="pass" id="texto_password"> Contraseña </label>
+    <input type="password"  class="required "  id="cajas" name="password">
+  </div>	  
+  <div class="text-xs-right">
+    <button type="submit" class="btn btn-info" id="boton">Enviar</button>
+  </div>
+
+  <script src="javascripts/bootstrap.bundle.min.js"></script>
+  </section>
+</body>
+
+</html>

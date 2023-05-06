@@ -1,0 +1,116 @@
+
+
+body {
+    background: #EEEEEE;
+    font-family: 'Roboto', sans-serif
+}
+
+/*.card {
+    width: 400px;
+    border: none;
+    border-radius: 15px
+}*/
+
+.hchat {
+    background: #11076e;
+    border-radius: 15px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    font-size: 24px;
+    height: 46px
+}
+
+.chat {
+    border: none;
+    background: #b7c7eb;
+    font-size: 12px;
+    border-radius: 20px
+}
+
+.bg-white {
+    border: 1px solid #E7E7E9;
+}
+
+.dot {
+    font-weight: bold
+}
+
+.form-control {
+    border: 1px solid #bdf0eb;
+    font-size: 12px
+}
+
+.form-control:focus {
+    box-shadow: none
+}
+
+.form-control::placeholder {
+    font-size: 12px;
+    color: #C4C4C4
+}
+
+
+
+
+
+
+.marco{
+    
+    width: 350px;
+    height: 340px;
+    background: #615b5b;
+    margin: auto;
+    margin-top: 80px;
+    box-shadow: 7px 13px 37px #000;
+    padding: 20px 60px;
+}
+
+.marco h1{
+    text-align: center;
+    border-bottom: 1px solid white;
+    margin-bottom: 30px;
+}
+
+
+#texto_correo{
+    
+    margin-bottom: 10px;
+    
+}
+
+#texto_password{
+    
+    
+    
+    
+    margin-bottom: 10px;
+}
+
+#cajas{
+ 
+    
+    border: 1px solid #017bab;
+    background-color: #252323;
+    margin-bottom: 10px;
+}
+
+#boton{
+    
+    color: white;
+    margin-top: 10px;
+    width: 150px;
+    background-color: #017bab;
+    
+    
+}
+
+@media (max-width: 576px) {
+    .card-body .row {
+      flex-direction: column;
+      align-items: center;
+    }
+    .card-body .row .col-2 {
+      margin-bottom: 10px;
+    }
+  }
+  

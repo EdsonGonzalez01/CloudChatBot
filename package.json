@@ -1,0 +1,22 @@
+{
+  "name": "chatbot",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.54.0",
+    "@aws-sdk/client-lex-runtime-service": "^3.54.0",
+    "@aws-sdk/client-lex-runtime-v2": "^3.54.0",
+    "@aws-sdk/client-sns": "^3.321.1",
+    "@aws-sdk/lib-dynamodb": "^3.321.1",
+    "@aws-sdk/util-dynamodb": "^3.321.1",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "^4.18.2",
+    "express-session": "^1.17.2",
+    "morgan": "~1.9.1",
+    "package.json": "^0.0.0"
+  }
+}
